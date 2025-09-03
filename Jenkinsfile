@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        checkmarx 'CheckmarxCLI'
+        Checkmarx One 'CheckmarxCLI'
     }
 
     environment {
