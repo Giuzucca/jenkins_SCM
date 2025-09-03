@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    tools {
+        checkmarx 'CheckmarxCLI' // Nome da instalação do CLI
+    }
+
+    environment {
+        CHECKMARX_PROJECT_NAME = 'Jenkins_SCM'
+        CHECKMARX_BRANCH_NAME = 'main'
+        CHECKMARX_ADDITIONAL_ARGS = '--scan-types sast'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${CHECKMARX_BRANCH_NAME}", url: 'https://github.com/Giuzucca/jenkins_SCM'
+            }
+        }
+
+        stage('Checkmarx Scan') {
+            steps {
+                checkmarxASTScanner(
+                    projectName: "${CHECKMARX_PROJECT_NAME}",
+                    branchName: "${CHECKMARX_BRANCH_NAME}",
+                    additionalArguments: "${CHECKMARX_ADDITIONAL_ARGS}"
+                )
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finalizado.'
+        }
+    }
+}
