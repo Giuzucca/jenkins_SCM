@@ -2,28 +2,31 @@ pipeline {
     agent any
 
     tools {
-        checkmarx 'CheckmarxCLI' // Nome da instalação do CLI
+        checkmarx 'CheckmarxCLI'
     }
 
     environment {
-        CHECKMARX_PROJECT_NAME = 'Jenkins_SCM'
-        CHECKMARX_BRANCH_NAME = 'main'
-        CHECKMARX_ADDITIONAL_ARGS = '--scan-types sast'
+        BRANCH_NAME = 'main'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: "${CHECKMARX_BRANCH_NAME}", url: 'https://github.com/Giuzucca/jenkins_SCM/blob/main/.github/workflows/jenkinsfile'
+                git branch: "${BRANCH_NAME}", url: 'https://github.com/Giuzucca/jenkins_SCM.git'
             }
         }
 
         stage('Checkmarx Scan') {
             steps {
                 checkmarxASTScanner(
-                    projectName: "${CHECKMARX_PROJECT_NAME}",
-                    branchName: "${CHECKMARX_BRANCH_NAME}",
-                    additionalArguments: "${CHECKMARX_ADDITIONAL_ARGS}"
+                    additionalOptions: '--scan-types sast',
+                    baseAuthUrl: 'https://iam.checkmarx.net',
+                    branchName: "${BRANCH_NAME}",
+                    checkmarxInstallation: 'CheckmarxCLI',
+                    credentialsId: 'CX_ID_JENKINS',
+                    projectName: 'teste_jenkins_SCM',
+                    serverUrl: 'https://ast.checkmarx.net',
+                    tenantName: 'nova_beta8'
                 )
             }
         }
