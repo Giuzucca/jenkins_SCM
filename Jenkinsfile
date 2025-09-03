@@ -25,7 +25,7 @@ pipeline {
                     checkmarxInstallation: 'CheckmarxCLI',
                     credentialsId: 'CX_ID_JENKINS',
                     projectName: 'teste_jenkins_SCM',
-                    serverUrl: 'https://ast.checkmarx.net',
+                    serverUrl: 'https://eu.ast.checkmarx.net',
                     tenantName: 'nova_beta8'
                 )
             }
