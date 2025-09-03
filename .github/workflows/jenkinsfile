@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: "${CHECKMARX_BRANCH_NAME}", url: 'https://github.com/Giuzucca/jenkins_SCM'
+                git branch: "${CHECKMARX_BRANCH_NAME}", url: 'https://github.com/Giuzucca/jenkins_SCM/blob/main/.github/workflows/jenkinsfile'
             }
         }
 
